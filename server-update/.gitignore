@@ -1,0 +1,13 @@
+# Binários compilados
+00cli-*
+*.exe
+
+# Metadata gerado automaticamente
+metadata.json
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
