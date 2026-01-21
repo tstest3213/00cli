@@ -1,0 +1,27 @@
+# Binários
+00cli
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+
+# Teste binário
+*.test
+
+# Arquivos de saída
+*.out
+
+# Go workspace file
+go.work
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
