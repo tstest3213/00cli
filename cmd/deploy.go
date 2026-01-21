@@ -12,8 +12,8 @@ import (
 var deployCmd = &cobra.Command{
 	Use:   "deploy",
 	Short: "Faz deploy da aplicação no servidor configurado",
-	Long: `Faz deploy da aplicação usando as configurações em ./00cli/settings.json
-e ./00cli/deploy.json. O deploy utiliza o diretório /provision/ se disponível.`,
+	Long: `Faz deploy da aplicação usando as configurações em ./.00cli/settings.json
+e ./.00cli/deploy.json. O deploy utiliza o diretório /provision/ se disponível.`,
 	RunE: runDeploy,
 }
 
@@ -82,10 +82,6 @@ func runDeploy(cmd *cobra.Command, args []string) error {
 			config["password"] = settings.Server.Password
 		}
 
-	case "docker":
-		config["compose_file"] = filepath.Join(root, "docker-compose.yml")
-		config["environment"] = deployConfig.Environment
-
 	case "git":
 		// Git deploy pode ser local ou remoto
 		config["repository"] = "" // Será detectado automaticamente se for repo local
@@ -93,7 +89,7 @@ func runDeploy(cmd *cobra.Command, args []string) error {
 		config["commands"] = deployConfig.Commands
 
 	default:
-		return fmt.Errorf("tipo de deploy não suportado: %s. Tipos suportados: ssh, docker, git", deployConfig.Type)
+		return fmt.Errorf("tipo de deploy não suportado: %s. Tipos suportados: ssh, git", deployConfig.Type)
 	}
 
 	// Criar deployer

@@ -25,11 +25,12 @@ type Settings struct {
 	} `json:"server"`
 	CurrentVersion string `json:"current_version"`
 	ProjectName    string `json:"project_name,omitempty"`
+	UpdateServer   string `json:"update_server,omitempty"` // URL do servidor de atualizações (ex: http://192.168.1.100:8080/updates)
 }
 
 // DeployConfig representa a configuração de deploy
 type DeployConfig struct {
-	Type        string            `json:"type"` // "docker", "ssh", "git", etc
+	Type        string            `json:"type"` // "ssh", "git", etc
 	Commands    []string          `json:"commands,omitempty"`
 	Scripts     []string          `json:"scripts,omitempty"`
 	Environment map[string]string `json:"environment,omitempty"`
@@ -44,7 +45,7 @@ var rootCmd = &cobra.Command{
 	Short: "00cli - Ferramenta CLI para deploy e gerenciamento de projetos",
 	Long: `00cli é uma ferramenta CLI inspirada no agent-cursor para gerenciar
 deploys e configurações de projetos. O programa verifica automaticamente
-por atualizações e requer arquivos de configuração em ./00cli/`,
+por atualizações e requer arquivos de configuração em ./.00cli/`,
 }
 
 func Execute() error {
@@ -72,8 +73,8 @@ func getProjectRoot() (string, error) {
 
 // checkProjectStructure verifica se o projeto tem a estrutura correta
 func checkProjectStructure(root string) error {
-	settingsPath := filepath.Join(root, "00cli", "settings.json")
-	deployPath := filepath.Join(root, "00cli", "deploy.json")
+	settingsPath := filepath.Join(root, ".00cli", "settings.json")
+	deployPath := filepath.Join(root, ".00cli", "deploy.json")
 
 	if _, err := os.Stat(settingsPath); os.IsNotExist(err) {
 		return fmt.Errorf("arquivo não encontrado: %s", settingsPath)
@@ -88,7 +89,7 @@ func checkProjectStructure(root string) error {
 
 // loadSettings carrega o arquivo settings.json
 func loadSettings(root string) (*Settings, error) {
-	path := filepath.Join(root, "00cli", "settings.json")
+	path := filepath.Join(root, ".00cli", "settings.json")
 	data, err := os.ReadFile(path)
 	if err != nil {
 		return nil, err
@@ -104,7 +105,7 @@ func loadSettings(root string) (*Settings, error) {
 
 // loadDeployConfig carrega o arquivo deploy.json
 func loadDeployConfig(root string) (*DeployConfig, error) {
-	path := filepath.Join(root, "00cli", "deploy.json")
+	path := filepath.Join(root, ".00cli", "deploy.json")
 	data, err := os.ReadFile(path)
 	if err != nil {
 		return nil, err

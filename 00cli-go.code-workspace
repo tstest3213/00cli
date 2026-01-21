@@ -1,0 +1,59 @@
+{
+	"folders": [
+		{
+			"path": "."
+		}
+	],
+	"settings": {
+		"workbench.colorCustomizations": {
+			"activityBar.background": "#1a5276",
+			"activityBar.foreground": "#ffffff",
+			"activityBar.activeBorder": "#00d9ff",
+			"titleBar.activeBackground": "#1a5276",
+			"titleBar.activeForeground": "#ffffff",
+			"titleBar.inactiveBackground": "#154360",
+			"titleBar.inactiveForeground": "#cccccc",
+			"statusBar.background": "#00d9ff",
+			"statusBar.foreground": "#000000",
+			"statusBar.debuggingBackground": "#ff6b6b",
+			"statusBar.debuggingForeground": "#ffffff",
+			"statusBar.noFolderBackground": "#1a5276",
+			"sideBar.background": "#0d2137",
+			"sideBar.foreground": "#d6eaf8",
+			"sideBarSectionHeader.background": "#1a5276",
+			"sideBarSectionHeader.foreground": "#ffffff",
+			"tab.activeBackground": "#1a5276",
+			"tab.activeForeground": "#ffffff",
+			"tab.activeBorderTop": "#00d9ff",
+			"tab.inactiveBackground": "#0d2137",
+			"tab.inactiveForeground": "#aaaaaa",
+			"editor.background": "#0a1929",
+			"editorLineNumber.foreground": "#00d9ff",
+			"editorLineNumber.activeForeground": "#ffffff",
+			"panel.background": "#0d2137",
+			"panel.border": "#1a5276",
+			"terminal.background": "#0a1929",
+			"terminal.foreground": "#d6eaf8"
+		},
+		"go.useLanguageServer": true,
+		"go.lintTool": "golangci-lint",
+		"go.lintOnSave": "package",
+		"go.formatTool": "goimports",
+		"editor.formatOnSave": true,
+		"[go]": {
+			"editor.defaultFormatter": "golang.go",
+			"editor.codeActionsOnSave": {
+				"source.organizeImports": "explicit"
+			}
+		},
+		"[go.mod]": {
+			"editor.defaultFormatter": "golang.go"
+		}
+	},
+	"extensions": {
+		"recommendations": [
+			"golang.go",
+			"ms-vscode.makefile-tools"
+		]
+	}
+}

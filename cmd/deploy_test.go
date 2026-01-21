@@ -10,7 +10,7 @@ import (
 func TestLoadSettings(t *testing.T) {
 	// Criar diretório temporário
 	tmpDir := t.TempDir()
-	cliDir := filepath.Join(tmpDir, "00cli")
+	cliDir := filepath.Join(tmpDir, ".00cli")
 	if err := os.MkdirAll(cliDir, 0755); err != nil {
 		t.Fatalf("erro ao criar diretório: %v", err)
 	}
@@ -56,7 +56,7 @@ func TestLoadSettings(t *testing.T) {
 func TestLoadDeployConfig(t *testing.T) {
 	// Criar diretório temporário
 	tmpDir := t.TempDir()
-	cliDir := filepath.Join(tmpDir, "00cli")
+	cliDir := filepath.Join(tmpDir, ".00cli")
 	if err := os.MkdirAll(cliDir, 0755); err != nil {
 		t.Fatalf("erro ao criar diretório: %v", err)
 	}
@@ -66,7 +66,8 @@ func TestLoadDeployConfig(t *testing.T) {
 		Type: "ssh",
 		Commands: []string{
 			"git pull",
-			"docker-compose up -d",
+			"npm install",
+			"npm run build",
 		},
 	}
 	deployConfig.Provision.Path = "./provision"
@@ -94,8 +95,8 @@ func TestLoadDeployConfig(t *testing.T) {
 		t.Errorf("esperado type 'ssh', obtido '%s'", loaded.Type)
 	}
 
-	if len(loaded.Commands) != 2 {
-		t.Errorf("esperado 2 comandos, obtido %d", len(loaded.Commands))
+	if len(loaded.Commands) != 3 {
+		t.Errorf("esperado 3 comandos, obtido %d", len(loaded.Commands))
 	}
 
 	if loaded.Provision.Path != "./provision" {
@@ -106,7 +107,7 @@ func TestLoadDeployConfig(t *testing.T) {
 func TestCheckProjectStructure(t *testing.T) {
 	// Criar diretório temporário
 	tmpDir := t.TempDir()
-	cliDir := filepath.Join(tmpDir, "00cli")
+	cliDir := filepath.Join(tmpDir, ".00cli")
 	if err := os.MkdirAll(cliDir, 0755); err != nil {
 		t.Fatalf("erro ao criar diretório: %v", err)
 	}

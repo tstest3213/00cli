@@ -58,20 +58,26 @@ Se o proxy deve estar ativo, verifique:
    netstat -tuln | grep 9001
    ```
 
-2. As variáveis estão corretas?
+2. Se não estiver, remova do ambiente:
    ```bash
-   echo $http_proxy
+   echo 'unset http_proxy https_proxy HTTP_PROXY HTTPS_PROXY all_proxy ALL_PROXY' >> ~/.bashrc
+   source ~/.bashrc
    ```
 
-## Para Commits Futuros
+## Script fix-pre-commit.sh
 
-Você pode criar um alias no Git:
+O projeto inclui um script `fix-pre-commit.sh` que automatiza a correção:
 
 ```bash
-git config --global alias.commit-no-proxy '!f(){ unset http_proxy https_proxy HTTP_PROXY HTTPS_PROXY all_proxy ALL_PROXY; git commit "$@"; }; f'
+#!/bin/bash
+# Desabilita proxy e executa pre-commit
+unset http_proxy https_proxy HTTP_PROXY HTTPS_PROXY all_proxy ALL_PROXY
+pre-commit run --all-files
 ```
 
-Então use:
+Uso:
+
 ```bash
-git commit-no-proxy -m "sua mensagem"
+chmod +x fix-pre-commit.sh
+./fix-pre-commit.sh
 ```

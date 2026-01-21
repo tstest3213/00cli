@@ -62,6 +62,9 @@ Para facilitar a instalação, você pode anexar binários compilados:
 
 ```bash
 # Compilar para diferentes plataformas
+make build-all
+
+# Ou manualmente
 GOOS=linux GOARCH=amd64 go build -o 00cli-linux-amd64 .
 GOOS=linux GOARCH=arm64 go build -o 00cli-linux-arm64 .
 GOOS=darwin GOARCH=amd64 go build -o 00cli-darwin-amd64 .
@@ -69,8 +72,7 @@ GOOS=darwin GOARCH=arm64 go build -o 00cli-darwin-arm64 .
 GOOS=windows GOARCH=amd64 go build -o 00cli-windows-amd64.exe .
 
 # Anexar ao release via GitHub CLI
-gh release upload v0.2.0 00cli-linux-amd64 00cli-linux-arm64 \
-  00cli-darwin-amd64 00cli-darwin-arm64 00cli-windows-amd64.exe
+gh release upload v0.2.0 server-update/binaries/*
 ```
 
 ## 🔄 Automatização com GitHub Actions
@@ -98,11 +100,11 @@ jobs:
 
       - name: Build
         run: |
-          GOOS=linux GOARCH=amd64 go build -o 00cli-linux-amd64 .
-          GOOS=linux GOARCH=arm64 go build -o 00cli-linux-arm64 .
-          GOOS=darwin GOARCH=amd64 go build -o 00cli-darwin-amd64 .
-          GOOS=darwin GOARCH=arm64 go build -o 00cli-darwin-arm64 .
-          GOOS=windows GOARCH=amd64 go build -o 00cli-windows-amd64.exe .
+          GOOS=linux GOARCH=amd64 go build -ldflags "-X main.version=${{ github.ref_name }}" -o 00cli-linux-amd64 .
+          GOOS=linux GOARCH=arm64 go build -ldflags "-X main.version=${{ github.ref_name }}" -o 00cli-linux-arm64 .
+          GOOS=darwin GOARCH=amd64 go build -ldflags "-X main.version=${{ github.ref_name }}" -o 00cli-darwin-amd64 .
+          GOOS=darwin GOARCH=arm64 go build -ldflags "-X main.version=${{ github.ref_name }}" -o 00cli-darwin-arm64 .
+          GOOS=windows GOARCH=amd64 go build -ldflags "-X main.version=${{ github.ref_name }}" -o 00cli-windows-amd64.exe .
 
       - name: Create Release
         uses: softprops/action-gh-release@v1
@@ -137,7 +139,7 @@ Se houver uma nova versão, você verá:
 
 ```
 ⚠️  Nova versão disponível: v0.2.0 (atual: v0.1.0)
-   Baixe em: https://github.com/tstest3213/00cli/releases/tag/v0.2.0
+   Execute '00cli update' para atualizar automaticamente
 ```
 
 ## 🔗 Links Úteis

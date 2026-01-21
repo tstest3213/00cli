@@ -12,7 +12,7 @@ import (
 var initCmd = &cobra.Command{
 	Use:   "init",
 	Short: "Inicializa a estrutura 00cli no projeto atual",
-	Long:  `Cria os arquivos settings.json e deploy.json no diretório ./00cli/`,
+	Long:  `Cria os arquivos settings.json e deploy.json no diretório ./.00cli/`,
 	RunE:  runInit,
 }
 
@@ -26,11 +26,11 @@ func runInit(cmd *cobra.Command, args []string) error {
 		return err
 	}
 
-	cliDir := filepath.Join(root, "00cli")
+	cliDir := filepath.Join(root, ".00cli")
 
-	// Criar diretório 00cli se não existir
+	// Criar diretório .00cli se não existir
 	if err := os.MkdirAll(cliDir, 0755); err != nil {
-		return fmt.Errorf("erro ao criar diretório 00cli: %w", err)
+		return fmt.Errorf("erro ao criar diretório .00cli: %w", err)
 	}
 
 	// Criar settings.json padrão
@@ -40,9 +40,12 @@ func runInit(cmd *cobra.Command, args []string) error {
 			CurrentVersion: "v0.0.0",
 			ProjectName:    filepath.Base(root),
 		}
+		// Configurações padrão do servidor
 		settings.Server.Host = "example.com"
 		settings.Server.Port = 22
 		settings.Server.User = "deploy"
+		// Deixar SSHKey e Password vazios para o usuário preencher
+		// UpdateServer pode ser configurado para usar servidor customizado (ex: "http://192.168.1.100:8080/updates")
 
 		data, err := json.MarshalIndent(settings, "", "  ")
 		if err != nil {
@@ -54,6 +57,7 @@ func runInit(cmd *cobra.Command, args []string) error {
 		}
 
 		fmt.Printf("✅ Criado: %s\n", settingsPath)
+		fmt.Printf("   📝 Edite este arquivo com as informações do seu servidor\n")
 	} else {
 		fmt.Printf("⚠️  Arquivo já existe: %s\n", settingsPath)
 	}
@@ -66,7 +70,8 @@ func runInit(cmd *cobra.Command, args []string) error {
 		}
 		deployConfig.Commands = []string{
 			"git pull",
-			"docker-compose up -d --build",
+			"npm install",
+			"npm run build",
 		}
 		deployConfig.Provision.Path = "./provision"
 		deployConfig.Environment = map[string]string{
@@ -88,7 +93,7 @@ func runInit(cmd *cobra.Command, args []string) error {
 	}
 
 	fmt.Println("\n✅ Estrutura 00cli inicializada com sucesso!")
-	fmt.Println("   Edite os arquivos em ./00cli/ para configurar seu projeto.")
+	fmt.Println("   Edite os arquivos em ./.00cli/ para configurar seu projeto.")
 
 	return nil
 }

@@ -1,0 +1,11 @@
+{
+  "server": {
+    "host": "meuservidor.com",
+    "port": 22,
+    "user": "deploy",
+    "ssh_key": "/home/usuario/.ssh/id_rsa",
+    "password": ""
+  },
+  "current_version": "v0.0.0",
+  "project_name": "meu-projeto"
+}
