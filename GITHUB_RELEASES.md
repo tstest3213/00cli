@@ -90,12 +90,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      
+
       - name: Set up Go
         uses: actions/setup-go@v4
         with:
           go-version: '1.21'
-      
+
       - name: Build
         run: |
           GOOS=linux GOARCH=amd64 go build -o 00cli-linux-amd64 .
@@ -103,7 +103,7 @@ jobs:
           GOOS=darwin GOARCH=amd64 go build -o 00cli-darwin-amd64 .
           GOOS=darwin GOARCH=arm64 go build -o 00cli-darwin-arm64 .
           GOOS=windows GOARCH=amd64 go build -o 00cli-windows-amd64.exe .
-      
+
       - name: Create Release
         uses: softprops/action-gh-release@v1
         with:

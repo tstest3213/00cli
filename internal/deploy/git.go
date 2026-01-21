@@ -9,10 +9,10 @@ import (
 
 // GitDeployer implementa deploy via Git
 type GitDeployer struct {
-	Repository string
-	Branch     string
+	Repository  string
+	Branch      string
 	ProjectPath string
-	Commands   []string
+	Commands    []string
 }
 
 // Execute executa deploy via Git

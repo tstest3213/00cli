@@ -27,7 +27,7 @@ func runInit(cmd *cobra.Command, args []string) error {
 	}
 
 	cliDir := filepath.Join(root, "00cli")
-	
+
 	// Criar diretório 00cli se não existir
 	if err := os.MkdirAll(cliDir, 0755); err != nil {
 		return fmt.Errorf("erro ao criar diretório 00cli: %w", err)
